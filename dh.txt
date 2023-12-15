@@ -1,0 +1,54 @@
+public class DiffieHellman {
+    public static void main(String[] args) {
+        // Publicly known values
+        int p = 23; // Prime number
+        int g = 5;  // Primitive root
+
+        // Secret keys known only to Alice and Bob
+        int x = 4;  // Alice's secret key
+        int y = 3;  // Bob's secret key
+
+        // Compute values exchanged between Alice and Bob
+        double aliceSends = computeModuloPower(g, x, p);
+        double bobSends = computeModuloPower(g, y, p);
+
+        // Compute shared secrets
+        double aliceComputes = computeModuloPower(bobSends, x, p);
+        double bobComputes = computeModuloPower(aliceSends, y, p);
+        double sharedSecret = computeModuloPower(g, x * y, p);
+
+        // Output the results
+        printResults(aliceSends, bobComputes, bobSends, aliceComputes, sharedSecret);
+    }
+
+    // Function to compute (base^exponent) % modulo efficiently
+    private static double computeModuloPower(double base, int exponent, int modulo) {
+        double result = 1;
+        base = base % modulo;
+
+        while (exponent > 0) {
+            if (exponent % 2 == 1) {
+                result = (result * base) % modulo;
+            }
+            exponent = exponent >> 1;
+            base = (base * base) % modulo;
+        }
+
+        return result;
+    }
+
+    // Function to print the simulation results
+    private static void printResults(double aliceSends, double bobComputes, double bobSends, double aliceComputes, double sharedSecret) {
+        System.out.println("Simulation of Diffie-Hellman key exchange algorithm");
+        System.out.println("Alice Sends: " + aliceSends);
+        System.out.println("Bob Computes: " + bobComputes);
+        System.out.println("Bob Sends: " + bobSends);
+        System.out.println("Alice Computes: " + aliceComputes);
+        System.out.println("Shared Secret: " + sharedSecret);
+
+        // Check if the shared secrets match
+        System.out.println((aliceComputes == sharedSecret && aliceComputes == bobComputes)
+                ? "Success: Shared Secrets Match!"
+                : "Error: Shared Secrets do not Match");
+    }
+}
