@@ -1,68 +1,78 @@
 <!DOCTYPE html>
+
 <head>
-   <html lang="en">
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <title>RSA Encryption</title>
+
 <body>
-<center>
-<h1>RSA Algorithm</h1>
-<h2>Implemented Using HTML & Javascript</h2>
-<hr>
-<table>
-<tr>
-<td>Enter First Prime Number:</td>
-<td><input type="number" value="53" id="p"></td>
-</tr>
-<tr>
-<td>Enter Second Prime Number:</td>
-<td><input type="number" value="59" id="q"></td>
-</tr>
-<tr>
-<td>Enter the Message (cipher text):<br>[A=1, B=2,...]</td>
-<td><input type="number" value="89" id="msg"></td>
-</tr>
-<tr>
-<td>Public Key:</td>
-<td><p id="publickey"></p></td>
-</tr>
-<tr>
-<td>Exponent:</td>
-<td><p id="exponent"></p></td>
-</tr>
-<tr>
-<td>Private Key:</td>
-<td><p id="privatekey"></p></td>
-</tr>
-<td>Cipher Text:</td>
-<tr>
-<td><p id="ciphertext"></p></td>
-</tr>
-<tr>
-<td><button onclick="RSA();">Apply RSA</button></td>
-</tr>
-</table>
-</center>
-<script type="text/javascript">
-   function RSA() {
-   var gcd = (a, b) => (!b? a gcd(b, a % b));
-   var parseValue = (id) => parseInt(document.getElementById(id).value);
-   var p = parseValue('p');
-   var q = parseValue('q');
-   var no = parseValue('msg');
-   var n=pq;
-   var t= (p1) (q 1);
-   var e=2;
-   while (et && gcd(e, t) !== 1) e++;
-   var d = 1;
-   while ((de) % t !== 1) d++;
-   var ct = Math.pow(no, e) % n;
-   var dt = Math.pow(ct, d) % n;
-   document.getElementById('publickey').innerHTML = n;
-   document.getElementById('exponent').innerHTML = e; document.getElementById('privatekey').innerHTML = d;
-   document.getElementById('ciphertext').innerHTML = ct;
-   }
-</script>
+    <center>
+        <h1>RSA Algorithm</h1>
+        <h2>Implemented Using HTML & Javascript</h2>
+        <hr>
+        <table>
+            <tr>
+                <td>Enter First Prime Number:</td>
+                <td><input type="number" value="53" id="p"></td>
+            </tr>
+            <tr>
+                <td>Enter Second Prime Number:</td>
+                <td><input type="number" value="59" id="q"></td>
+            </tr>
+            <tr>
+                <td>Enter the Message (cipher text):<br>[A=1, B=2,...]</td>
+                <td><input type="number" value="89" id="msg"></td>
+            </tr>
+            <tr>
+                <td>Public Key:</td>
+                <td>
+                    <p id="publickey"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>Exponent:</td>
+                <td>
+                    <p id="exponent"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>Private Key:</td>
+                <td>
+                    <p id="privatekey"></p>
+                </td>
+            </tr>
+            <td>Cipher Text:</td>
+            <td>
+                <p id="ciphertext"></p>
+            </td>
+            <tr>
+                <td><button onclick="RSA();">Apply RSA</button></td>
+            </tr>
+        </table>
+    </center>
+    <script type="text/javascript">
+        function RSA() {
+            var gcd = (a, b) => (!b ? a : gcd(b, a % b));
+            var parseValue = (id) => parseInt(document.getElementById(id).value);
+            var p = parseValue('p');
+            var q = parseValue('q');
+            var no = parseValue('msg');
+            var n = p * q;
+            var t = (p - 1) * (q - 1);
+            var e = 2;
+            while (e < t && gcd(e, t) !== 1) e++;
+            var d = 1;
+            while ((d * e) % t !== 1) d++;
+            var ct = Math.pow(no, e) % n;
+            var dt = Math.pow(ct, d) % n;
+            document.getElementById('publickey').innerHTML = n;
+            document.getElementById('exponent').innerHTML = e;
+            document.getElementById('privatekey').innerHTML = d;
+            document.getElementById('ciphertext').innerHTML = ct;
+        }
+    </script>
 </body>
+
 </html>
