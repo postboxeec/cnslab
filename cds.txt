@@ -1,0 +1,37 @@
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.util.Scanner;
+
+public class CreatingDigitalSignature {
+    public static void main(String args[]) throws Exception {
+        // Create a Scanner object for user input
+        Scanner sc = new Scanner(System.in);
+
+        // Prompt the user to enter some text
+        System.out.println("Enter some text:");
+        String msg = sc.nextLine();
+
+        // Generate a key pair using DSA algorithm with a key size of 2048 bits
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
+        keyPairGen.initialize(2048);
+        KeyPair pair = keyPairGen.generateKeyPair();
+        PrivateKey privkey = pair.getPrivate();
+
+        // Create a Signature object using SHA256 with DSA
+        Signature sign = Signature.getInstance("SHA256withDSA");
+
+        // Initialize the Signature object for signing with the private key
+        sign.initSign(privkey);
+
+        // Update the Signature object with the input message
+        sign.update(msg.getBytes());
+
+        // Generate the digital signature for the given text
+        byte[] signature = sign.sign();
+
+        // Display the digital signature as a String
+        System.out.println("Digital signature for given text: " + new String(signature, "UTF-8"));
+    }
+}
